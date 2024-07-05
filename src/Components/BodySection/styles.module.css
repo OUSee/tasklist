@@ -1,0 +1,78 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.body_section {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    padding: 1% 5%;
+}
+
+.task_conatiner {
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 100%;
+    height: 3em;
+    padding: 2em;
+    margin-top: 1%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.task_title {
+    font-size: 1.5em;
+    width: 75%;
+}
+
+.task_conatiner .tooltip {
+    visibility: hidden;
+    width: 220px;
+    height: fit-content;
+    background-color: rgb(207, 207, 207);
+    color: black;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 6px;
+    position: relative;
+    z-index: 1;
+}
+
+.done_button:hover {
+    cursor: pointer;
+}
+
+.edit_button:hover {
+    cursor: pointer;
+}
+
+.add_task_button {
+    cursor: pointer;
+}
+
+.add_task_container {
+    margin-top: 1%;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.task_conatiner:hover .tooltip {
+    visibility: visible;
+}
+
+.p_visible {
+    visibility: visible;
+}
+
+.p_hidden {
+    visibility: hidden;
+}

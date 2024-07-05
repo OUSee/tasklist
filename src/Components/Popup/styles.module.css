@@ -1,0 +1,30 @@
+.popup {
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: black;
+}
+
+.input {
+    width: 100%;
+    height: 2.5%;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.p_visible {
+    visibility: visible;
+}
+
+.p_hidden {
+    visibility: hidden;
+}
