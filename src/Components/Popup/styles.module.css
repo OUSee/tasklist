@@ -9,12 +9,19 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-color: black;
+    background-color: #9e9e9e99;
+    gap: 10px;
 }
 
-.input {
-    width: 100%;
-    height: 2.5%;
+input {
+    width: 200px;
+    height: 3.5%;
+}
+
+.popup_description {
+    text-align: start;
+    width: 60%;
+    height: 3.5%;
 }
 
 button:hover {

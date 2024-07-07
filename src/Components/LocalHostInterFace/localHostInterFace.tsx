@@ -2,17 +2,16 @@ import { useEffect, useState } from "react";
 import React from "react";
 
 type Task = {
-    id: string;
-    title: string;
-    description: string;
-    doneState: boolean;
-}
+  id: string;
+  title: string;
+  description: string;
+  doneState: boolean;
+};
 
-enum Options {
-    dowload,
-    update
+export enum Options {
+  dowload,
+  update,
 }
-
 
 export const localhostinterFace = (tasksData: Task[], element: Task,key: string, option: Options, setTasksData: React.Dispatch<React.SetStateAction<Task[]>>, elToRemove?: Task ) => {
 
@@ -69,6 +68,6 @@ export const localhostinterFace = (tasksData: Task[], element: Task,key: string,
         }
     }
 
-    localstorageInterfaceEXE()
+    //localstorageInterfaceEXE()
 
 }

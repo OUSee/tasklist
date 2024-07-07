@@ -1,0 +1,85 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+button {
+    border-radius: 0.5em;
+    border: 0px;
+    box-shadow: 0 0 5px gray;
+}
+
+button:hover {
+    cursor: pointer;
+    outline: lightgreen 1px solid;
+}
+
+.body_section {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    padding: 1% 5%;
+}
+
+.task_conatiner {
+    box-shadow: 0 0 10px orange;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: start;
+    width: 100%;
+    border-radius: 0.5em;
+    padding: 1em 2em;
+    margin-bottom: 1%;
+    transition: height 0.3s ease-in-out;
+}
+
+.infoContainer {
+    height: 1.5em;
+    width: 75%;
+    transition: height 0.5s ease-in-out;
+}
+
+.task_title {
+    height: 1.5em;
+    font-size: 1.5em;
+    width: 75%;
+}
+
+.tooltip {
+    position: relative;
+    opacity: 0%;
+}
+
+.infoContainer:hover .tooltip {
+    cursor: pointer;
+    opacity: 100%;
+    height: fit-content;
+}
+
+.infoContainer:hover {
+    height: fit-content;
+}
+
+.infoContainer:hover .task_conatiner {
+    height: fit-content;
+}
+
+.done_button {
+    margin-right: 1em;
+}
+
+.add_task_container {
+    margin-top: 1%;
+}
+
+.p_visible {
+    visibility: visible;
+}
+
+.p_hidden {
+    visibility: hidden;
+}

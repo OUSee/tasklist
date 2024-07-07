@@ -1,74 +1,93 @@
-import { useEffect, useState } from "react";
-import { EditSaveIcon } from "../Icons/edit"
-import styles from "./styles.module.css"
-import { localhostinterFace } from "../LocalHostInterFace/localHostInterFace"
+import { Dispatch, FC, useState } from "react";
+import { Task } from "../../types";
+import { EditSaveIcon } from "../Icons/edit";
+import styles from "./styles.module.css";
 
 enum Options {
-    dowload,
-    update
-}
-
-type Task = {
-    id: string;
-    title: string;
-    description: string;
-    doneState: boolean;
+  dowload,
+  update,
 }
 
 type Props = {
-    popupState: string,
-    tasksData: Task[],
-    currentTask: Task,
-    setPopupState: React.Dispatch<React.SetStateAction<string>>,
-    setCurrentTask: React.Dispatch<React.SetStateAction<Task>>,
-    setTasksData: React.Dispatch<React.SetStateAction<Task[]>>
-}
+  editItem: Task;
+  tasksData: Task[];
+  setTasksData: Dispatch<React.SetStateAction<Task[]>>;
+  setEditItem: Dispatch<React.SetStateAction<Task | null>>;
+};
 
+export const Popup: FC<Props> = ({
+  editItem,
+  tasksData,
+  setTasksData,
+  setEditItem,
+}) => {
+  //состояние для инпутов
+  const [updateItem, setUpdateItem] = useState({ title: "", description: "" });
 
+  const SaveChanges = () => {
+    if (updateItem.title !== "" && updateItem.description !== "") {
+      const newData = tasksData.find((item) => item.id === editItem.id);
+      if (newData) {
+        const data = {
+          id: newData?.id,
+          title: updateItem.title,
+          description: updateItem.description,
+          doneState: false,
+        };
 
-export const Popup = (props: Props) => {
-
-    const [popupvisibility, setVisible] = useState(props.popupState)
-
-    useEffect(() => {
-        console.log("popup_mounted")
-    }, [])
-
-    useEffect(() => { console.log("popupState changed")}, [popupvisibility])
-
-    const SaveChanges = () => {
-        props.setPopupState("p_hidden")
-        setVisible("p_hidden")
-        const TilteElement = document.getElementById("popup_title")
-        const DescriptionElement = document.getElementById("popup_description")
-
-        if (TilteElement !== null && DescriptionElement !== null) {
-            const NewTask: Task = {
-                id: props.currentTask.id,
-                title: TilteElement?.innerText,
-                description: DescriptionElement?.innerText,
-                doneState: false
-            }
-            localhostinterFace(props.tasksData, NewTask, "tasks", Options.update, props.setTasksData, props.currentTask)
-            console.log(`save func executed`)
-
-        }
-        else {
-            console.log("error no changes done")
-            props.setPopupState("p_hidden")
-            setVisible("p_hidden")
-        }
+        const filteredData = tasksData.filter(
+          (elem) => elem.id !== editItem.id
+        );
+        setTasksData([...filteredData, data]);
+        setEditItem(null);
+        console.log(`new enrty is ${data} and edititem is null`)
+      }
     }
+    else {
+      const newData = tasksData.find((item) => item.id === editItem.id);
+      
+      if (newData) {
+        const data = {
+          id: newData?.id,
+          title: editItem.title,
+          description: editItem.description,
+          doneState: false,
+        };
 
-    return (
-        <div className={styles.popup + " "+ popupvisibility}>
-            <label htmlFor="Tile">Title</label>
-            <input name="Title" placeholder={props.currentTask.title} id="popup_title" className={``} type="text" />
-            <label htmlFor="Desc">Description</label>
-            <input name="Desc" placeholder={props.currentTask.description} id="popup_description" className="input popup_description" type="text"/>
-            <button onClick={()=>SaveChanges()}>
-                <EditSaveIcon width="2em" height="2em" changeEditState={false} />
-            </button>
-        </div>
-    )
-}
+        const filteredData = tasksData.filter(
+          (elem) => elem.id !== editItem.id
+        );
+        setTasksData([...filteredData, data]);
+        setEditItem(null);
+        console.log(`new enrty is ${data} and edititem is null`)
+      }
+    }
+  };
+
+  return (
+    <div className={styles.popup}>
+      <label className={styles.label} htmlFor="Tile">Title</label>
+      <input
+        placeholder={editItem.title}
+        id="popup_title"
+        type="text"
+        onChange={(event) =>
+          setUpdateItem({ ...updateItem, title: event.target.value })
+        }
+      />
+      <label className={styles.label} htmlFor="Desc">Description</label>
+      <input
+        placeholder={editItem.description}
+        id="popup_description"
+        className={styles.popup_description}
+        type="text"
+        onChange={(event) =>
+          setUpdateItem({ ...updateItem, description: event.target.value })
+        }
+      />
+      <button className={styles.saveButton} onClick={SaveChanges}>
+        <EditSaveIcon width="2em" height="2em" changeEditState={false} />
+      </button>
+    </div>
+  );
+};
