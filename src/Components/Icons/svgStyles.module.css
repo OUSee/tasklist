@@ -1,5 +1,31 @@
 .logo_icon {
+    animation: grow-animation 5s infinite linear;
 }
 
 .undone_icon {
+    animation: rotate-animation 10s infinite linear;
+}
+
+@keyframes rotate-animation {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes grow-animation {
+    0% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(5);
+    }
+    100% {
+        transform: translateX(-5);
+    }
 }
