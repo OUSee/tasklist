@@ -37,7 +37,7 @@ export const Head = () => {
           <span className={style.tooltipWelcome}>
             This is a quick guide how to tasks!
           </span>
-          <p>To create a task press add button below, in appeared window enter some title and description for it. Congrats! You've created a task, it will apear in the list. You can also mark task as done and change it if you want. </p>
+          <p>To create a task press add button below, in appeared window enter some title and description for it. Congrats! You've created a task, it will apear in the list. You can also mark task as done and change it if&nbsp;you&nbsp;want. </p>
           <span>Enjoy!</span>
         </p>
       </div>
