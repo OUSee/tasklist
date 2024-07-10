@@ -8,22 +8,25 @@ import { TaskItem } from "../TaskItem";
 import { DoneTasks } from "../DoneTasks";
 
 
-const DATA = localStorage.getItem("tasks");
+const RESOURCE_URL = `https://2584f01ed614f181.mokky.dev/tasks`;
+
 let DATAAR: Task[] = [];
-if (DATA !== null) {
-  DATAAR = JSON.parse(DATA);
-}
+
 
 
 
 export const BodySection = () => {
-  const [tasksData, setTasksData] = useState<Task[]>(DATAAR);
+  const [tasksData, setTasksData] = useState(DATAAR);
   const [editItem, setEditItem] = useState<null | Task>(null);
   const [doneTasks, setDoneTasks] = useState<Task[]>([]);
   const [doneItem, setDoneItem] = useState<null | Task>(null);
 
   useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasksData));
+    fetchData()
+  },[])
+
+  useEffect(() => {
+    postData();
   }, [tasksData]);
 
   useEffect(() => {
@@ -33,6 +36,35 @@ export const BodySection = () => {
       setTasksData([...newTasksData]);
     }
   }, [doneItem]);
+
+
+
+  
+  const fetchData = async () => {
+    try {
+        const response = await fetch('https://2584f01ed614f181.mokky.dev/tasks');
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || 'Something went wrong');
+        }
+
+        setTasksData(data);
+      } catch (error) {
+        console.error('Error fetching');
+      }
+  }
+  
+  const postData = async () => { 
+    const responce = await fetch(`${RESOURCE_URL}`, {
+    method: "PATCH", // Отправляем PATCH-запрос
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(tasksData), 
+    });
+  }
 
   const AddNewTask = () => {
     //из-за того, что id элемента строилось на длине массива, после удаления и добавления задач id могли повторятся
@@ -51,7 +83,6 @@ export const BodySection = () => {
 
     setEditItem(newTask)
     setTasksData([...tasksData, newTask])
-    console.log(`new task is ${newTask} and tasks is ${tasksData}`)
     //обновили состояние со всеми задачами
     //
   };

@@ -11,7 +11,7 @@ button {
 
 button:hover {
     cursor: pointer;
-    outline: lightgreen 1px solid;
+    box-shadow: 0 0 8px gray;
 }
 
 .body_section {
@@ -35,6 +35,8 @@ button:hover {
     padding: 1em 2em;
     margin-bottom: 1%;
     transition: height 0.3s ease-in-out;
+    cursor: default;
+    margin-bottom: 20px;
 }
 
 .infoContainer {
@@ -55,7 +57,7 @@ button:hover {
 }
 
 .infoContainer:hover .tooltip {
-    cursor: pointer;
+    cursor: default;
     opacity: 100%;
     height: fit-content;
 }
@@ -70,6 +72,7 @@ button:hover {
 
 .done_button {
     margin-right: 1em;
+    background-color: rgba(255, 251, 0, 0.325);
 }
 
 .add_task_container {
