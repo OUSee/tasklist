@@ -1,4 +1,4 @@
-import { Dispatch, FC, useState } from "react";
+import { Dispatch, FC, useEffect, useState } from "react";
 import { Task } from "../../types";
 import { EditSaveIcon } from "../Icons/edit";
 import styles from "./styles.module.css";
@@ -22,65 +22,70 @@ export const Popup: FC<Props> = ({
   setEditItem,
 }) => {
   //состояние для инпутов
-  const [updateItem, setUpdateItem] = useState({ title: "", description: "" });
+  const [updateItem, setUpdateItem] = useState(editItem);
+
+  const { title, description } = updateItem;
+  
+  useEffect(() => { setUpdateItem(updateItem) }, [editItem])
+  
+  useEffect(() => {
+    if (!editItem) {
+      return;
+    }
+
+    function ESCkeyDownHandler(e: globalThis.KeyboardEvent) {
+      if (editItem && e.key === "Escape") {
+        e.preventDefault();
+        setEditItem(null);
+      }
+    }
+
+    const ENTkeyDownHandler = (e: globalThis.KeyboardEvent) => {
+      if (e.key === "Enter") {
+        SaveChanges();
+      }
+    }
+
+    document.addEventListener("keydown", ESCkeyDownHandler);
+    document.addEventListener("keydown", ENTkeyDownHandler);
+
+    return () => {
+      document.removeEventListener("keydown", ESCkeyDownHandler);
+      document.removeEventListener("keydown", ENTkeyDownHandler);
+    };
+  }, [updateItem]);
 
   const SaveChanges = () => {
-    if (updateItem.title !== "" && updateItem.description !== "") {
-      const newData = tasksData.find((item) => item.id === editItem.id);
-      if (newData) {
-        const data = {
-          id: newData?.id,
-          title: updateItem.title,
-          description: updateItem.description,
-          doneState: false,
-        };
 
-        const filteredData = tasksData.filter(
+    const titleinput = document.querySelector("#popup_title") as HTMLInputElement;
+    const descinput = document.querySelector("#popup_description") as HTMLInputElement;
+
+    setUpdateItem({id: editItem.id ,title: titleinput.value, description: descinput.value, doneState: false})
+
+    const filteredData = tasksData.filter(
           (elem) => elem.id !== editItem.id
         );
-        setTasksData([...filteredData, data]);
+        setTasksData([...filteredData, updateItem]);
         setEditItem(null);
-        console.log(`new enrty is ${data} and edititem is null`)
-      }
-    }
-    else {
-      const newData = tasksData.find((item) => item.id === editItem.id);
-      
-      if (newData) {
-        const data = {
-          id: newData?.id,
-          title: editItem.title,
-          description: editItem.description,
-          doneState: false,
-        };
-
-        const filteredData = tasksData.filter(
-          (elem) => elem.id !== editItem.id
-        );
-        setTasksData([...filteredData, data]);
-        setEditItem(null);
-        console.log(`new enrty is ${data} and edititem is null`)
-      }
-    }
+    console.log(`new enrty is {title: ${updateItem.title}; Description: ${updateItem.description}} and edititem is set null`)
   };
 
   return (
     <div className={styles.popup}>
-      <label className={styles.label} htmlFor="Tile">Title</label>
       <input
-        placeholder={editItem.title}
         id="popup_title"
         type="text"
+        defaultValue={title}
         onChange={(event) =>
           setUpdateItem({ ...updateItem, title: event.target.value })
         }
+        autoFocus
       />
-      <label className={styles.label} htmlFor="Desc">Description</label>
       <input
-        placeholder={editItem.description}
         id="popup_description"
         className={styles.popup_description}
         type="text"
+        defaultValue={description}
         onChange={(event) =>
           setUpdateItem({ ...updateItem, description: event.target.value })
         }

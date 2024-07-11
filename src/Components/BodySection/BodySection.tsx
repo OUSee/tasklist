@@ -20,6 +20,7 @@ export const BodySection = () => {
   const [editItem, setEditItem] = useState<null | Task>(null);
   const [doneTasks, setDoneTasks] = useState<Task[]>([]);
   const [doneItem, setDoneItem] = useState<null | Task>(null);
+  const [deleteItem, setDeleteitem] = useState<null | Task>(null);
 
   useEffect(() => {
     fetchData()
@@ -37,12 +38,24 @@ export const BodySection = () => {
     }
   }, [doneItem]);
 
+  useEffect(() => {
+    handledeleteItem()
+  },[deleteItem])
 
 
+  const handledeleteItem = async () => {
+    if (deleteItem) { 
+      const filteredData = tasksData.filter(
+          (elem) => elem.id !== deleteItem.id
+        );
+        setTasksData(filteredData);
+        setDeleteitem(null);
+    }
+  }
   
   const fetchData = async () => {
     try {
-        const response = await fetch('https://2584f01ed614f181.mokky.dev/tasks');
+        const response = await fetch(`${RESOURCE_URL}`);
         const data = await response.json();
 
         if (!response.ok) {
@@ -97,6 +110,7 @@ export const BodySection = () => {
             task={task}
             setEditItem={setEditItem}
             setDoneItem={setDoneItem}
+            setDeleteItem={setDeleteitem}
           />
         );
       })}

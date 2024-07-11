@@ -4,20 +4,26 @@ import { DoneIcon } from "../Icons/done";
 import { EditSaveIcon } from "../Icons/edit";
 import { UndoneIcon } from "../Icons/undone";
 import styles from "./styles.module.css";
+import { TrashIcon } from "../Icons/trash";
 
 type Props = {
   task: Task;
   setEditItem: Dispatch<React.SetStateAction<Task | null>>;
   setDoneItem: Dispatch<React.SetStateAction<Task | null>>;
+  setDeleteItem: Dispatch<React.SetStateAction<Task | null>>;
 };
 
-export const TaskItem: FC<Props> = ({ task, setEditItem, setDoneItem }) => {
+export const TaskItem: FC<Props> = ({ task, setEditItem, setDoneItem, setDeleteItem }) => {
   const [isVisible, setIsVisible] = useState(true);
   const [isDone, setIsDone] = useState(task.doneState);
 
   useEffect(() => {
     console.log(`state ${isDone} changed`);
-  },[isDone])
+  }, [isDone])
+  
+  const handleDeleteItem = () => {
+    setDeleteItem(task);
+  } 
 
   const HandleDoneIConClick = (task: Task) => {
     setIsDone(true);
@@ -25,11 +31,8 @@ export const TaskItem: FC<Props> = ({ task, setEditItem, setDoneItem }) => {
   };
 
   const DoneIconChanger = () => {
-    if(isDone) {
+    if(!isDone) {
       return(<DoneIcon width="2em" height="2em"/>)
-    }
-    else {
-      return(<UndoneIcon width="2em" height="2em"/>)
     }
   }
 
@@ -69,6 +72,9 @@ export const TaskItem: FC<Props> = ({ task, setEditItem, setDoneItem }) => {
           }}
         >
           <EditSaveIcon width="2em" height="2em" changeEditState={true} />
+        </button>
+        <button className={styles.trash} onClick={handleDeleteItem}>
+          <TrashIcon width="2em" height="2em" />
         </button>
       </div>
     </div>

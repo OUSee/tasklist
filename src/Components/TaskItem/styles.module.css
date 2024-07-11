@@ -4,7 +4,11 @@
 }
 
 button {
-    border-radius: 0.5em;
+    background-color: aliceblue;
+    padding: 5px 5px;
+    height: 37px;
+    width: fit-content;
+    border-radius: 50%;
     border: 0px;
     box-shadow: 0 0 5px gray;
 }
@@ -70,11 +74,6 @@ button:hover {
     height: fit-content;
 }
 
-.done_button {
-    margin-right: 1em;
-    background-color: rgba(255, 251, 0, 0.325);
-}
-
 .add_task_container {
     margin-top: 1%;
 }
@@ -85,4 +84,26 @@ button:hover {
 
 .p_hidden {
     visibility: hidden;
+}
+
+button:not(:last-child) {
+    margin-right: 20px;
+}
+
+.done_button:hover {
+    background-color: #87ff66;
+    color: white;
+    box-shadow: 0 0 8px #2ed600;
+}
+
+.edit_button:hover {
+    background-color: #f8ff6b;
+    color: white;
+    box-shadow: 0 0 8px #d6ee02;
+}
+
+.trash:hover {
+    background-color: rgb(255, 60, 60);
+    color: white;
+    box-shadow: 0 0 8px red;
 }

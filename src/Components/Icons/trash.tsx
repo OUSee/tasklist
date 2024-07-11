@@ -3,10 +3,10 @@
 import React from "react";
 
 type Props = {
-    children: React.ReactNode;
-    width: string | null;
-    height: string | null;
-    color: string | null;
+    children?: React.ReactNode;
+    width?: string | null;
+    height?: string | null;
+    color?: string | null;
 }
 
 
